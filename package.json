@@ -1,0 +1,24 @@
+{
+  "name": "hue-proxy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ehmorris/hue-proxy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ehmorris/hue-proxy/issues"
+  },
+  "homepage": "https://github.com/ehmorris/hue-proxy#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "https": "^1.0.0"
+  }
+}
