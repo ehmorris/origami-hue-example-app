@@ -12,7 +12,6 @@ app.use(
 app.use((request, response, next) => {
   const host = request.query.host;
   const path = request.query.path;
-  const body = Object.keys(request.body)[0];
   const headers = {
     'Authorization': request.query.authorization,
     'Content-Type': request.query.contentType,
@@ -24,9 +23,6 @@ app.use((request, response, next) => {
     method: 'PUT',
     headers: headers,
   };
-
-  console.log(options);
-  console.log(body);
 
   const proxiedRequest = https.request(options, (realResponse) => {
     let responseString = '';
@@ -40,7 +36,10 @@ app.use((request, response, next) => {
     });
   });
 
-  proxiedRequest.write(body);
+  let body = JSON.parse(Object.keys(request.body)[0]);
+  body.on === 1 ? body.on = true : body.on = false;
+
+  proxiedRequest.write(JSON.stringify(body));
   proxiedRequest.end();
 
   next();
