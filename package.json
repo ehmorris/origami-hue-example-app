@@ -2,6 +2,7 @@
   "name": "origami-hue-example-app",
   "version": "1.0.0",
   "author": "Edwin Morris",
+  "license": "MIT",
   "scripts": {
     "start": "node index.js"
   },
