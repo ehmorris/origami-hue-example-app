@@ -29,15 +29,16 @@ To run the server, run `yarn start` or `node index.js` from the project folder. 
 
 In the Origami prototype, make the following changes to send a real request to the proxy:
 
-- Edit the “Default Body” splitter patch to include your own whitelist id, access token, and light id.
+* Edit the “Default Body” splitter patch to include your own whitelist id, access token, and light id.
+* If you’re not running the proxy at `http://localhost:3000`, edit the “Proxy Host” splitter patch to your new proxy url.
 
-- If you’re not running the proxy at `http://localhost:3000`, edit the “Proxy Host” splitter patch to your new proxy url.
+![](https://i.imgur.com/jqdS7pE.png)
 
 The proxy doesn’t yet work from Heroku, but I’m working on it.
 
 -----
 
-#### Getting an access token and whitelist id from Hue
+### Getting an access token and whitelist id from Hue
 
 Once you have a Hue developer account, you can create an app and [find the official documentation here](https://www.developers.meethue.com/documentation/remote-hue-api).
 
