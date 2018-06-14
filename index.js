@@ -3,50 +3,31 @@ const bodyParser = require('body-parser');
 const https = require('https');
 const app = express();
 
-app.use(
-  bodyParser.urlencoded({
-    extended: false,
-  })
-);
+const convertOnToBool = (object) => {
+  let mutatedObject = object;
+  mutatedObject.on = Boolean(mutatedObject.on);
+  return JSON.stringify(mutatedObject);
+};
 
-app.use((request, response, next) => {
-  const host = request.query.host;
-  const path = request.query.path;
-  const headers = {
-    'Authorization': request.query.authorization,
-    'Content-Type': request.query.contentType,
-  };
+app.use(bodyParser.urlencoded({
+  extended: false,
+}));
 
-  const options = {
-    host: host,
-    path: path,
-    method: 'PUT',
-    headers: headers,
-  };
+app.post('/', (request, response, next) => {
+  const dataString = Object.keys(request.body)[0];
+  const data = JSON.parse(dataString);
+  const body = convertOnToBool(data.body);
+  const proxiedRequest = https.request(data.options);
 
-  const proxiedRequest = https.request(options, (realResponse) => {
-    let responseString = '';
+  console.log(`
+    Sending: ${body}
+         To: ${JSON.stringify(data.options)}`);
 
-    realResponse.on('data', (data) => {
-      responseString += data;
-    });
+  proxiedRequest.write(body);
 
-    realResponse.on('end', () => {
-      console.log(responseString);
-    });
-  });
-
-  let body = JSON.parse(Object.keys(request.body)[0]);
-  body.on === 1 ? body.on = true : body.on = false;
-
-  proxiedRequest.write(JSON.stringify(body));
   proxiedRequest.end();
 
   next();
-});
-
-app.post('/', (request, response) => {
-  response.json({});
 });
 
 app.listen(3000);
