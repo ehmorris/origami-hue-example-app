@@ -2,20 +2,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const lodashGet = require('lodash.get');
 const lodashSet = require('lodash.set');
+const clone = require('clone');
 const requestPromise = require('request-promise-native');
 const app = express();
 
-const transformBools = (object, keys) => {
-  let mutatedObject = object;
+const transformBools = (object, keysToTransform) => {
+  const transformedObject = clone(object);
 
-  keys.forEach((key) => {
-    const boolValue = lodashGet(mutatedObject, key);
+  keysToTransform.forEach((key) => {
+    const boolValue = lodashGet(transformedObject, key);
     if (boolValue) {
-      lodashSet(mutatedObject, key, Boolean(boolValue));
+      lodashSet(transformedObject, key, Boolean(boolValue));
     }
   });
 
-  return mutatedObject;
+  return transformedObject;
 };
 
 const parseBody = (bodyString) => {
