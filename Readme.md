@@ -50,7 +50,7 @@ Heroku is a free and easy way to do this, and this project will work from Heroku
 
 -----
 
-### Getting an access token and whitelist id from Hue
+#### Getting an access token and whitelist id from Hue
 
 Once you have a Hue developer account, you can create an app and [find the official documentation here](https://www.developers.meethue.com/documentation/remote-hue-api).
 
