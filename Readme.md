@@ -23,7 +23,7 @@ The proxy in this repo uses Node and Express, and it expects a request body like
 
 -----
 
-#### Getting Started
+#### Getting started
 
 To run the server, run `yarn start` or `node index.js` from the project folder. The server should start at `http://localhost:3000`.
 
@@ -34,7 +34,19 @@ In the Origami prototype, make the following changes to send a real request:
 
 ![](https://i.imgur.com/hAS67Ru.png)
 
-The proxy doesn’t yet work from Heroku.
+-----
+
+#### Using with Origami Live
+
+To run this Hue app from Origami Live, without being connected to a computer, the proxy server has to be run from a domain, rather than localhost.
+
+Heroku is a free and easy way to do this, and this project will work from Heroku. Here’s an outline of the steps:
+
+* Create a Heroku account and create a new app.
+* Under the app’s settings tab, add the heroku/nodejs buildpack.
+* Push the code to the new app via one of Heroku’s deployment methods. Connecting Heroku to [Dropbox](https://devcenter.heroku.com/articles/dropbox-sync) or [Github](https://devcenter.heroku.com/articles/github-integration) are easy options.
+* Copy the Heroku domain e.g. `https://your-app.herokuapp.com` into the “Proxy Host” splitter patch.
+* Load the prototype onto your phone, disconnect, and enjoy!
 
 -----
 
