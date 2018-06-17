@@ -19,8 +19,9 @@ const transformBools = (object, keysToTransform) => {
   return transformedObject;
 };
 
-const parseBody = (bodyString) => {
-  return JSON.parse(Object.keys(bodyString)[0]);
+const parseBody = (requestBody) => {
+  const bodyString = Object.keys(requestBody)[0];
+  return JSON.parse(bodyString);
 };
 
 app.use(bodyParser.urlencoded({
