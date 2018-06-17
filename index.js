@@ -1,33 +1,42 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const https = require('https');
+const lodashGet = require('lodash.get');
+const lodashSet = require('lodash.set');
+const clone = require('clone');
+const requestPromise = require('request-promise-native');
 const app = express();
 
-const convertOnToBool = (object) => {
-  let mutatedObject = object;
-  mutatedObject.on = Boolean(mutatedObject.on);
-  return JSON.stringify(mutatedObject);
+const transformBools = (object, keysToTransform) => {
+  const transformedObject = clone(object);
+
+  keysToTransform.forEach((key) => {
+    const boolValue = lodashGet(transformedObject, key);
+    if (boolValue) {
+      lodashSet(transformedObject, key, Boolean(boolValue));
+    }
+  });
+
+  return transformedObject;
+};
+
+const parseBody = (requestBody) => {
+  const bodyString = Object.keys(requestBody)[0];
+  return JSON.parse(bodyString);
 };
 
 app.use(bodyParser.urlencoded({
   extended: false,
 }));
 
-app.post('/', (request, response, next) => {
-  const dataString = Object.keys(request.body)[0];
-  const data = JSON.parse(dataString);
-  const body = convertOnToBool(data.body);
-  const proxiedRequest = https.request(data.options);
+app.post('/', ({body: requestBody}, proxyResponse) => {
+  const data = parseBody(requestBody);
+  const transformedData = transformBools(data, ['body.on', 'json']);
 
-  console.log(`
-    Sending: ${body}
-         To: ${JSON.stringify(data.options)}`);
-
-  proxiedRequest.write(body);
-
-  proxiedRequest.end();
-
-  next();
+  requestPromise(transformedData).then((response) => {
+    proxyResponse.send(response);
+  }).catch((error) => {
+    proxyResponse.send(error);
+  });
 });
 
 app.listen(3000);

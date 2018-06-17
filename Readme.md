@@ -2,39 +2,39 @@
 
 `Origami Hue Example App.origami` is an [Origami](https://origami.design/) prototype that turns a Hue light on and off.
 
-Requests from the prototype to Hue have to go through a proxy so they can be correctly formatted, since Origami doesn’t yet have fine-grained control over request headers and methods.
+Requests from the prototype to Hue have to go through a proxy, `index.js`, so they can be correctly formatted. Origami doesn’t yet have fine-grained control over request headers and methods.
 
-The proxy in this repo is a Node server, and it expects a request body like this:
+The proxy in this repo uses Node and Express, and it expects a request body like this, which is what Origami sends:
 
-``` json
+```
 { '{
-  "options": {
-    "host": "api.meethue.com",
-    "path": "/bridge/<whitelist-id>/lights/1/state",
-    "method": "PUT",
-    "headers": {
-      "Authorization": "Bearer <access-token>",
-      "Content-Type": "application/json"
-    }
+  "uri": "https://api.meethue.com/bridge/<whitelist-id>/lights/1/state",
+  "method": "PUT",
+  "headers": {
+    "Authorization": "Bearer <access-token>",
+    "Content-Type": "application/json"
   },
-
   "body": {
     "on": 1,
     "bri": 200
   }
-}' : }
+}' : '' }
 ```
+
+-----
+
+#### Getting Started
 
 To run the server, run `yarn start` or `node index.js` from the project folder. The server should start at `http://localhost:3000`.
 
-In the Origami prototype, make the following changes to send a real request to the proxy:
+In the Origami prototype, make the following changes to send a real request:
 
 * Edit the “Default Body” splitter patch to include your own whitelist id, access token, and light id.
 * If you’re not running the proxy at `http://localhost:3000`, edit the “Proxy Host” splitter patch to your new proxy url.
 
-![](https://i.imgur.com/jqdS7pE.png)
+![](https://i.imgur.com/hAS67Ru.png)
 
-The proxy doesn’t yet work from Heroku, but I’m working on it.
+The proxy doesn’t yet work from Heroku.
 
 -----
 
