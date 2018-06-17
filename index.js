@@ -30,8 +30,6 @@ app.post('/', ({body: requestBody}, proxyResponse) => {
   const data = parseBody(requestBody);
   const transformedData = transformBools(data, ['body.on', 'json']);
 
-  console.log(`Sending: ${JSON.stringify(transformedData)}`);
-
   requestPromise(transformedData).then((response) => {
     proxyResponse.send(response);
   }).catch((error) => {
