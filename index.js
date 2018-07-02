@@ -11,7 +11,7 @@ const transformBools = (object, keysToTransform) => {
 
   keysToTransform.forEach((key) => {
     const boolValue = lodashGet(transformedObject, key);
-    if (boolValue) {
+    if (boolValue !== undefined) {
       lodashSet(transformedObject, key, Boolean(boolValue));
     }
   });
