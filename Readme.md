@@ -44,7 +44,7 @@ Heroku is a free and easy way to do this, and this project will work from Heroku
 
 * Create a Heroku account and create a new app.
 * Under the app’s settings tab, add the heroku/nodejs buildpack.
-* Push the code to the new app via one of Heroku’s deployment methods. Connecting Heroku to [Dropbox](https://devcenter.heroku.com/articles/dropbox-sync) or [Github](https://devcenter.heroku.com/articles/github-integration) are easy options.
+* Push the code to the new app via one of Heroku’s deployment methods. Connecting Heroku to [Github](https://devcenter.heroku.com/articles/github-integration) is an easy option.
 * Copy the Heroku domain e.g. `https://your-app.herokuapp.com` into the “Proxy Host” splitter patch.
 * Load the prototype onto your phone, disconnect, and enjoy!
 
