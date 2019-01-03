@@ -38,23 +38,20 @@ In the Origami prototype, make the following changes to send a real request:
 
 #### Using with Origami Live
 
-To run this Hue app from Origami Live, without being connected to a computer, the proxy server has to be run from a domain, rather than localhost.
+Origami Live can’t connect to your localhost, so you need to run this proxy server from a domain. Creating a Heroku app is the easiest way to do this:
 
-Heroku is a free and easy way to do this, and this project will work from Heroku. Here’s an outline of the steps:
-
-* Create a Heroku account and create a new app.
-* Under the app’s settings tab, add the heroku/nodejs buildpack.
-* Push the code to the new app via one of Heroku’s deployment methods. Connecting Heroku to [Github](https://devcenter.heroku.com/articles/github-integration) is an easy option.
-* Copy the Heroku domain e.g. `https://your-app.herokuapp.com` into the “Proxy Host” splitter patch.
+* Create a Heroku account if you don’t have one.
+* From the /apps dashboard, create a new app.
+* In the app’s settings tab, add the heroku/nodejs buildpack.
+* Push the proxy code to the new app. [Connecting Heroku to Github](https://devcenter.heroku.com/articles/github-integration) makes this easy.
+* Copy the Heroku domain e.g. `https://your-app.herokuapp.com` into the “Proxy Host” splitter patch in Origami.
 * Load the prototype onto your phone, disconnect, and enjoy!
 
 -----
 
 #### Getting an access token and whitelist id from Hue
 
-Once you have a Hue developer account, you can create an app and [find the official documentation here](https://www.developers.meethue.com/documentation/remote-hue-api).
-
-In short, you must take the following steps:
+Create a Hue developer account if you don’t have one, then create an app and follow these steps:
 
 1. Navigate to a url like this, but with your own client id and app name. Login to your Hue account and approve access to your new Hue app. You’ll be redirected to your app’s callback url, with a query param containing a short code that you’ll use for the next step.
 
@@ -75,7 +72,7 @@ curl -X POST \
 
 ```
 
-3. Make a PUT request to the following url, replacing the access token with your own. Proceed immediatly to the next step.
+3. Make a PUT request to the following url, replacing the access token with your own. Proceed immediately to the next step.
 
 ```
 curl -X PUT \
@@ -94,3 +91,5 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -d '{ "devicetype": "<your-app-name>" }'
   ```
+
+[Hue’s official documentation is here](https://www.developers.meethue.com/documentation/remote-hue-api)
